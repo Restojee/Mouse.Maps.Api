@@ -25,7 +25,6 @@ public interface MapProfile {
     @Mapping(target = "user", source = "user")
     MapEntity toMapEntityFromMap(Map map);
 
-    @Mapping(target = "user.id", source = "userId")
     MapEntity toMapEntityFromCreateMapRequest(CreateMapRequest createMapRequest);
 
     MapEntity toMapEntityFromUpdateMapRequest(@MappingTarget MapEntity mapEntity, UpdateMapRequest updateMapRequest);
