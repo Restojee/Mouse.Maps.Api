@@ -2,14 +2,14 @@ package com.mouse.maps.maps.queries.read;
 
 import jakarta.transaction.Transactional;
 import com.mouse.maps.exceptions.BadRequestException;
-import com.mouse.maps.maps.queries.GetMapById;
+import com.mouse.maps.maps.queries.GetMap;
 import com.mouse.maps.maps.data.MapRepository;
 import com.mouse.maps.maps.mappers.MapProfile;
 import com.mouse.maps.maps.models.Map;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GetMapQuery implements GetMapById {
+public class GetMapQuery implements GetMap {
     private final MapRepository mapRepository;
 
     private final MapProfile mapProfile;

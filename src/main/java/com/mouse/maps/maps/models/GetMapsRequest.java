@@ -9,7 +9,6 @@ import org.springframework.lang.Nullable;
 @Getter
 public class GetMapsRequest extends PaginateRequest {
 
-    @Nullable
     private Integer userId;
 
 }

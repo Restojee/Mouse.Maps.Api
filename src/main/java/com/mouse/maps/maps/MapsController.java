@@ -1,5 +1,6 @@
 package com.mouse.maps.maps;
 
+import com.mouse.maps.maps.queries.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,8 +13,6 @@ import com.mouse.maps.maps.queries.write.CreateMapQuery;
 import com.mouse.maps.maps.models.CreateMapRequest;
 import com.mouse.maps.maps.models.GetMapsRequest;
 import com.mouse.maps.maps.models.Map;
-import com.mouse.maps.maps.queries.write.DeleteMapQuery;
-import com.mouse.maps.maps.queries.write.UpdateMapQuery;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,25 +28,25 @@ import java.util.Collection;
 public class MapsController {
 
     @Autowired
-    private CreateMapQuery createMapQuery;
+    private CreateMap createMap;
 
     @Autowired
-    private GetMapQuery getMapQuery;
+    private GetMap getMap;
 
     @Autowired
-    private GetMapsQuery getMapsQuery;
+    private GetMapsByUser getMapsByUser;
 
     @Autowired
-    private GetFavoriteMapsQuery getFavoriteMapsQuery;
+    private GetFavoriteMapsByUser getFavoriteMapsByUser;
 
     @Autowired
-    private GetCompletedMapsQuery getCompletedMapsQuery;
+    private GetCompletedMapsByUser getCompletedMapsByUser;
 
     @Autowired
-    private UpdateMapQuery updateMapQuery;
+    private UpdateMap updateMap;
 
     @Autowired
-    private DeleteMapQuery deleteMapQuery;
+    private DeleteMap deleteMap;
 
     @GetMapping
     @Operation(
@@ -55,7 +54,7 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getMaps(@ParameterObject GetMapsRequest request) {
-        return this.getMapsQuery.invoke(request);
+        return this.getMapsByUser.invoke(request);
     }
 
     @GetMapping("/{mapId}")
@@ -64,7 +63,7 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Map getMap(@PathVariable Integer mapId) {
-        return this.getMapQuery.invoke(mapId);
+        return this.getMap.invoke(mapId);
     }
 
     @GetMapping("/favorites")
@@ -73,7 +72,7 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getFavoriteMaps(@ParameterObject GetMapsRequest request) {
-        return this.getFavoriteMapsQuery.invoke(request);
+        return this.getFavoriteMapsByUser.invoke(request);
     }
 
     @GetMapping("/completed")
@@ -82,7 +81,7 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getCompletedMapsByUser(@ParameterObject GetMapsRequest request) {
-        return this.getCompletedMapsQuery.invoke(request);
+        return this.getCompletedMapsByUser.invoke(request);
     }
 
     @PostMapping
@@ -91,7 +90,7 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Map createMap(@ParameterObject CreateMapRequest request) {
-        return this.createMapQuery.invoke(request);
+        return this.createMap.invoke(request);
     }
 
     @PutMapping
@@ -100,7 +99,7 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Map createMap(@ParameterObject UpdateMapRequest request) {
-        return this.updateMapQuery.invoke(request);
+        return this.updateMap.invoke(request);
     }
 
     @DeleteMapping
@@ -109,7 +108,7 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public String deleteMap(@ParameterObject Integer mapId) {
-        this.deleteMapQuery.invoke(mapId);
+        this.deleteMap.invoke(mapId);
         return "Ok";
     }
 }

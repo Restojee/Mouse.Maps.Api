@@ -11,8 +11,6 @@ public class CreateMapRequest {
 
     public String name;
 
-    public Integer userId;
-
     @Nullable
     public String description;
 
