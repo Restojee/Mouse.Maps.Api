@@ -6,9 +6,10 @@ import com.mouse.maps.maps.data.MapRepository;
 import com.mouse.maps.maps.mappers.MapProfile;
 import com.mouse.maps.maps.models.UpdateMapRequest;
 import com.mouse.maps.maps.models.Map;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class UpdateMapQuery implements UpdateMap {
     private final MapRepository mapRepository;
 

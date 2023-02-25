@@ -85,7 +85,7 @@ public class MapsController {
         return this.getCompletedMapsQuery.invoke(request);
     }
 
-    @PostMapping("/maps")
+    @PostMapping
     @Operation(
         description = "Create map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -94,7 +94,7 @@ public class MapsController {
         return this.createMapQuery.invoke(request);
     }
 
-    @PutMapping("/maps")
+    @PutMapping
     @Operation(
         description = "Update map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -103,7 +103,7 @@ public class MapsController {
         return this.updateMapQuery.invoke(request);
     }
 
-    @DeleteMapping("/maps")
+    @DeleteMapping
     @Operation(
         description = "Delete map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")

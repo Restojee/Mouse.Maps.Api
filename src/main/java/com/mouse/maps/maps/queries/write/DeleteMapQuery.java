@@ -4,9 +4,10 @@ import lombok.val;
 import com.mouse.maps.exceptions.BadRequestException;
 import com.mouse.maps.maps.data.MapRepository;
 import com.mouse.maps.maps.mappers.MapProfile;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class DeleteMapQuery {
     private final MapRepository mapRepository;
 

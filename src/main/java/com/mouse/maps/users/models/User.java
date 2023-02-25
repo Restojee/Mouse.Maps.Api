@@ -8,11 +8,11 @@ import lombok.Setter;
 @Setter
 public class User {
 
+    public Integer id;
+
     public String avatar;
     
     public String username;
-
-    public Integer userId;
 
     public String firstName;
 
