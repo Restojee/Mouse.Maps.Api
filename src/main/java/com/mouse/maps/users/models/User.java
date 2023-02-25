@@ -14,10 +14,6 @@ public class User {
 
     public Integer userId;
 
-    public String password;
-
-    public String email;
-
     public String firstName;
 
     public String lastName;

@@ -1,7 +1,6 @@
 package com.mouse.maps.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 import java.util.Collection;
@@ -10,6 +9,9 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Table(name = "users")
 public class UserEntity
 {
@@ -20,9 +22,6 @@ public class UserEntity
 
     @Column(name = "username")
     private String username;
-
-    @Column(name = "password")
-    private String password;
 
     @Column(name = "created_utc_date")
     private Date createdUtcDate;

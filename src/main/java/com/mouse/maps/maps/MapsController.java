@@ -21,11 +21,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-@RestController
 @RequestMapping("/maps")
 @SecurityRequirement(name = "bearerAuth")
 @PreAuthorize("isAuthenticated()")
 @Tag(name = "Maps")
+@RestController
 public class MapsController {
 
     @Autowired
@@ -48,7 +48,6 @@ public class MapsController {
 
     @Autowired
     private DeleteMapQuery deleteMapQuery;
-
 
     @GetMapping
     @Operation(

@@ -1,14 +1,15 @@
 package com.mouse.maps.users.mappers;
 
-
-
 import com.mouse.maps.entities.UserEntity;
 import com.mouse.maps.users.models.JwtRequest;
 import com.mouse.maps.users.models.User;
 import org.mapstruct.Mapper;
+import org.mapstruct.NullValuePropertyMappingStrategy;
 
-
-@Mapper(componentModel = "spring")
+@Mapper(
+    componentModel = "spring",
+    nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+)
 public interface UserProfile {
 
     User toUserFromUserEntity(UserEntity userEntity);

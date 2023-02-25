@@ -15,11 +15,14 @@ import java.util.stream.Stream;
 @Mapper(
     componentModel = "spring",
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
+
 )
 public interface MapProfile {
 
+    @Mapping(target = "user", source = "user")
     Map toMapFromMapEntity(MapEntity mapEntity);
 
+    @Mapping(target = "user", source = "user")
     MapEntity toMapEntityFromMap(Map map);
 
     @Mapping(target = "user.id", source = "userId")
@@ -34,6 +37,4 @@ public interface MapProfile {
     MapEntity toMapEntityFromMapUpdateRequest(@MappingTarget MapEntity mapEntity, UpdateMapRequest updateMapRequest);
 
     MapEntity toMapEntityFromMapUpdateImageRequest(@MappingTarget MapEntity mapEntity, UpdateMapImageRequest updateMapImageRequest);
-
-    Stream<Map> toMapsFromMapEntities(Collection<MapEntity> mapEntities);
 }
