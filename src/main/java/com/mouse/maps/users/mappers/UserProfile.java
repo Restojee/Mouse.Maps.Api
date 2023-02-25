@@ -3,7 +3,9 @@ package com.mouse.maps.users.mappers;
 import com.mouse.maps.entities.UserEntity;
 import com.mouse.maps.users.models.JwtRequest;
 import com.mouse.maps.users.models.User;
+import com.mouse.maps.users.models.UserDetails;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 
 @Mapper(
@@ -17,6 +19,10 @@ public interface UserProfile {
     UserEntity toUserEntityFromUser(User user);
 
     UserEntity toUserEntityFromUserLoginRequest(JwtRequest loginRequest);
+
+    UserDetails toUserDetailsFromUser(User user);
+
+    User toUserFromUserDetails(UserDetails userDetails);
 
     //UserEntity toUserEntityFromRegisterUserRequest(RegisterUserRequest registerUserRequest);
 }

@@ -1,6 +1,5 @@
 package com.mouse.maps.users.models;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,10 +10,6 @@ public class User {
     public Integer id;
 
     public String avatar;
-    
+
     public String username;
-
-    public String firstName;
-
-    public String lastName;
 }

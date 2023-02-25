@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 public class FindOrCreateUserQuery implements FindOrCreateUser {
 
     @Autowired
-    private UserRepository userRepository;
+    protected UserRepository userRepository;
 
     @Autowired
-    private UserProfile userProfile;
+    protected UserProfile userProfile;
 
     public User invoke(String username) {
         val foundUser = this.userRepository.findByUsername(username);
