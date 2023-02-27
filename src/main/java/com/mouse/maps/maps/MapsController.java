@@ -1,18 +1,15 @@
 package com.mouse.maps.maps;
 
+import com.mouse.maps.maps.models.*;
 import com.mouse.maps.maps.queries.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.mouse.maps.maps.models.UpdateMapRequest;
 import com.mouse.maps.maps.queries.read.GetCompletedMapsQuery;
 import com.mouse.maps.maps.queries.read.GetFavoriteMapsQuery;
 import com.mouse.maps.maps.queries.read.GetMapQuery;
 import com.mouse.maps.maps.queries.read.GetMapsQuery;
 import com.mouse.maps.maps.queries.write.CreateMapQuery;
-import com.mouse.maps.maps.models.CreateMapRequest;
-import com.mouse.maps.maps.models.GetMapsRequest;
-import com.mouse.maps.maps.models.Map;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -47,6 +44,9 @@ public class MapsController {
 
     @Autowired
     private DeleteMap deleteMap;
+
+    @Autowired
+    private SetMapTags setMapTags;
 
     @GetMapping
     @Operation(
@@ -110,5 +110,14 @@ public class MapsController {
     public String deleteMap(@ParameterObject Integer mapId) {
         this.deleteMap.invoke(mapId);
         return "Ok";
+    }
+
+    @PutMapping("/set-tags")
+    @Operation(
+        description = "Set map tags",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public Map setMapTags(@ParameterObject SetMapTagRequest request) {
+        return this.setMapTags.invoke(request);
     }
 }

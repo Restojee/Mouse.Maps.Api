@@ -1,7 +1,6 @@
 package com.mouse.maps.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 import java.util.Date;
@@ -9,6 +8,9 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "maps_tags")
 public class MapTagEntity {
     @Id

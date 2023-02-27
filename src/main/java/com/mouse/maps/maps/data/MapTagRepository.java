@@ -1,6 +1,7 @@
 package com.mouse.maps.maps.data;
 
 import com.mouse.maps.entities.MapEntity;
+import com.mouse.maps.entities.MapTagEntity;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,13 +13,6 @@ import java.util.stream.Stream;
 
 @Transactional
 @Repository
-public interface MapRepository extends JpaRepository<MapEntity, Integer>, PagingAndSortingRepository<MapEntity, Integer> {
+public interface MapTagRepository extends JpaRepository<MapTagEntity, Integer> {
 
-    Optional<MapEntity> findByName(String name);
-
-    Stream<MapEntity> findAllByUser_Id(Integer userId, Pageable pageable);
-
-    Stream<MapEntity> findAllByCompleted_UserId(Integer completedUserId, Pageable pageable);
-
-    Stream<MapEntity> findAllByFavorites_UserId(Integer favoriteUserId, Pageable pageable);
 }

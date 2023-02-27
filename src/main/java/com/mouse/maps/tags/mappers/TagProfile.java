@@ -1,5 +1,6 @@
 package com.mouse.maps.tags.mappers;
 
+import com.mouse.maps.entities.MapTagEntity;
 import com.mouse.maps.entities.TagEntity;
 import com.mouse.maps.tags.models.CreateTagRequest;
 import com.mouse.maps.tags.models.Tag;
@@ -15,8 +16,6 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 )
 public interface TagProfile {
     Tag toTagFromTagEntity(TagEntity tagEntity);
-
-    TagEntity toTagEntityFromTag(Tag tag);
 
     TagEntity toTagEntityFromCreateTagRequest(CreateTagRequest request);
 

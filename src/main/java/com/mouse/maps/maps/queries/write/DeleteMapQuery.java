@@ -1,17 +1,16 @@
 package com.mouse.maps.maps.queries.write;
 
+import com.mouse.maps.maps.queries.DeleteMap;
 import lombok.val;
 import com.mouse.maps.exceptions.BadRequestException;
 import com.mouse.maps.maps.data.MapRepository;
-import com.mouse.maps.maps.mappers.MapProfile;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
 @Component
-public class DeleteMapQuery {
+public class DeleteMapQuery implements DeleteMap {
     private final MapRepository mapRepository;
 
-    public DeleteMapQuery(MapRepository mapRepository, MapProfile mapProfile) {
+    public DeleteMapQuery(MapRepository mapRepository) {
         this.mapRepository = mapRepository;
     }
 

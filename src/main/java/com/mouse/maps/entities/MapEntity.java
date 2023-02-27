@@ -1,8 +1,7 @@
 package com.mouse.maps.entities;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Collection;
 import java.util.Date;
@@ -10,6 +9,9 @@ import java.util.Date;
 @Entity
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "maps")
 public class MapEntity {
     @Id
@@ -37,15 +39,23 @@ public class MapEntity {
     @Column(name = "modified_utc_date")
     private Date modifiedUtcDate;
 
-    @OneToMany(mappedBy = "map")
+    @OneToMany(mappedBy = "map", fetch = FetchType.EAGER)
     private Collection<MapCommentEntity> comments;
 
-    @OneToMany(mappedBy = "map")
+    @OneToMany(mappedBy = "map", fetch = FetchType.EAGER)
     private Collection<NoteEntity> notes;
 
-    @OneToMany(mappedBy = "map")
+    @OneToMany(mappedBy = "map", fetch = FetchType.EAGER)
     private Collection<MapCompletedEntity> completed;
 
-    @OneToMany(mappedBy = "map")
+    @OneToMany(mappedBy = "map", fetch = FetchType.EAGER)
     private Collection<MapFavoriteEntity> favorites;
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "maps_tags",
+        joinColumns = @JoinColumn(name = "map_id"),
+        inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private Collection<TagEntity> tags;
 }

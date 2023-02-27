@@ -7,33 +7,38 @@ import com.mouse.maps.maps.models.*;
 import com.mouse.maps.maps.models.CompleteMapRequest;
 import com.mouse.maps.maps.models.FavoriteMapsRequest;
 import com.mouse.maps.maps.models.UpdateMapImageRequest;
+import com.mouse.maps.tags.mappers.TagProfile;
 import org.mapstruct.*;
 
-import java.util.Collection;
-import java.util.stream.Stream;
-
 @Mapper(
+    uses = TagProfile.class,
     componentModel = "spring",
     nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE
-
 )
 public interface MapProfile {
 
     @Mapping(target = "user", source = "user")
+    @Mapping(source = "tags", target = "tags")
     Map toMapFromMapEntity(MapEntity mapEntity);
 
-    @Mapping(target = "user", source = "user")
-    MapEntity toMapEntityFromMap(Map map);
-
     MapEntity toMapEntityFromCreateMapRequest(CreateMapRequest createMapRequest);
-
-    MapEntity toMapEntityFromUpdateMapRequest(@MappingTarget MapEntity mapEntity, UpdateMapRequest updateMapRequest);
 
     MapCompletedEntity toMapCompletedEntityFromCompleteRequest(CompleteMapRequest completeMapRequest);
 
     MapFavoriteEntity toMapFavoriteEntityFromFavoriteRequest(FavoriteMapsRequest favoriteMapRequest);
 
-    MapEntity toMapEntityFromMapUpdateRequest(@MappingTarget MapEntity mapEntity, UpdateMapRequest updateMapRequest);
+    MapEntity toMapEntityFromUpdateMapRequest(
+        @MappingTarget MapEntity mapEntity,
+        UpdateMapRequest updateMapRequest
+    );
 
-    MapEntity toMapEntityFromMapUpdateImageRequest(@MappingTarget MapEntity mapEntity, UpdateMapImageRequest updateMapImageRequest);
+    MapEntity toMapEntityFromMapUpdateRequest(
+        @MappingTarget MapEntity mapEntity,
+        UpdateMapRequest updateMapRequest
+    );
+
+    MapEntity toMapEntityFromMapUpdateImageRequest(
+        @MappingTarget MapEntity mapEntity,
+        UpdateMapImageRequest updateMapImageRequest
+    );
 }
