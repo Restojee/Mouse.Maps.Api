@@ -5,15 +5,12 @@ import com.mouse.maps.maps.queries.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.mouse.maps.maps.queries.read.GetCompletedMapsQuery;
-import com.mouse.maps.maps.queries.read.GetFavoriteMapsQuery;
-import com.mouse.maps.maps.queries.read.GetMapQuery;
-import com.mouse.maps.maps.queries.read.GetMapsQuery;
-import com.mouse.maps.maps.queries.write.CreateMapQuery;
 import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Collection;
 
@@ -48,9 +45,12 @@ public class MapsController {
     @Autowired
     private SetMapTags setMapTags;
 
+    @Autowired
+    private UploadMapImage uploadMapImage;
+
     @GetMapping
     @Operation(
-        description = "GetMaps",
+        description = "Get maps endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getMaps(@ParameterObject GetMapsRequest request) {
@@ -68,16 +68,16 @@ public class MapsController {
 
     @GetMapping("/favorites")
     @Operation(
-        description = "Get favorite maps endpoint",
+        description = "Get favorite maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
-    public Collection<Map> getFavoriteMaps(@ParameterObject GetMapsRequest request) {
+    public Collection<Map> getFavoriteMapsByUser(@ParameterObject GetMapsRequest request) {
         return this.getFavoriteMapsByUser.invoke(request);
     }
 
     @GetMapping("/completed")
     @Operation(
-        description = "Get completed maps endpoint",
+        description = "Get completed maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getCompletedMapsByUser(@ParameterObject GetMapsRequest request) {
@@ -98,7 +98,7 @@ public class MapsController {
         description = "Update map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
-    public Map createMap(@ParameterObject UpdateMapRequest request) {
+    public Map updateMap(@ParameterObject UpdateMapRequest request) {
         return this.updateMap.invoke(request);
     }
 
@@ -114,10 +114,19 @@ public class MapsController {
 
     @PutMapping("/set-tags")
     @Operation(
-        description = "Set map tags",
+        description = "Set map tags endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Map setMapTags(@ParameterObject SetMapTagRequest request) {
         return this.setMapTags.invoke(request);
+    }
+
+    @PutMapping(value = "/update-image/{mapId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @Operation(
+        description = "Update map image",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public Map updateMapImage(@RequestParam("file") MultipartFile file, @PathVariable Integer mapId) {
+        return this.uploadMapImage.invoke(file, mapId);
     }
 }
