@@ -5,26 +5,26 @@ import com.mouse.maps.common.Paginate;
 import com.mouse.maps.maps.queries.GetCompletedMapsByUser;
 import com.mouse.maps.maps.data.MapRepository;
 import com.mouse.maps.maps.mappers.MapProfile;
-import com.mouse.maps.maps.models.GetMapsRequest;
+import com.mouse.maps.maps.models.GetMapsByUserRequest;
 import com.mouse.maps.maps.models.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-@Service
+@Component
 public class GetCompletedMapsQuery implements GetCompletedMapsByUser {
-    private final MapRepository mapRepository;
 
-    private final MapProfile mapProfile;
+    @Autowired
+    protected MapRepository mapRepository;
 
-    public GetCompletedMapsQuery(MapRepository mapRepository, MapProfile mapProfile) {
-        this.mapRepository = mapRepository;
-        this.mapProfile = mapProfile;
-    }
+    @Autowired
+    protected MapProfile mapProfile;
 
     @Transactional
-    public Collection<Map> invoke(GetMapsRequest getCompletedMapsRequest) {
+    public Collection<Map> invoke(GetMapsByUserRequest getCompletedMapsRequest) {
         return this.mapRepository
             .findAllByCompleted_UserId(
                 getCompletedMapsRequest.getUserId(),

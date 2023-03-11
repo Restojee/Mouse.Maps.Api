@@ -6,18 +6,18 @@ import com.mouse.maps.maps.queries.GetMap;
 import com.mouse.maps.maps.data.MapRepository;
 import com.mouse.maps.maps.mappers.MapProfile;
 import com.mouse.maps.maps.models.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-@Service
+@Component
 public class GetMapQuery implements GetMap {
-    private final MapRepository mapRepository;
 
-    private final MapProfile mapProfile;
+    @Autowired
+    protected MapRepository mapRepository;
 
-    public GetMapQuery(MapProfile mapProfile, MapRepository mapRepository) {
-        this.mapRepository = mapRepository;
-        this.mapProfile = mapProfile;
-    }
+    @Autowired
+    protected MapProfile mapProfile;
 
     @Transactional
     public Map invoke(Integer mapId) {

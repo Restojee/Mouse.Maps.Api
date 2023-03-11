@@ -1,23 +1,23 @@
 package com.mouse.maps.maps.queries.read;
 
-import com.mouse.maps.common.Paginate;
-import com.mouse.maps.maps.data.MapRepository;
-import com.mouse.maps.maps.mappers.MapProfile;
-import com.mouse.maps.maps.models.GetMapsByUserRequest;
-import com.mouse.maps.maps.models.GetMapsRequest;
-import com.mouse.maps.maps.models.Map;
-import com.mouse.maps.maps.queries.GetMaps;
-import com.mouse.maps.maps.queries.GetMapsByUser;
 import jakarta.transaction.Transactional;
+import com.mouse.maps.maps.queries.GetMapsByUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+
+import com.mouse.maps.common.Paginate;
+import com.mouse.maps.maps.models.GetMapsByUserRequest;
+import com.mouse.maps.maps.models.Map;
+
+import com.mouse.maps.maps.mappers.MapProfile;
+import com.mouse.maps.maps.data.MapRepository;
 
 import java.util.Collection;
 import java.util.stream.Collectors;
 
 @Component
-public class GetMapsQuery implements GetMaps {
+public class GetMapsByUserQuery implements GetMapsByUser {
 
     @Autowired
     protected MapRepository mapRepository;
@@ -26,10 +26,12 @@ public class GetMapsQuery implements GetMaps {
     protected MapProfile mapProfile;
 
     @Transactional
-    public Collection<Map> invoke(GetMapsRequest request) {
+    public Collection<Map> invoke(GetMapsByUserRequest getMapsRequest) {
         return this.mapRepository
-            .findAll(Paginate.getPageRequest(request))
-            .stream()
+            .findAllByUser_Id(
+                getMapsRequest.getUserId(),
+                Paginate.getPageRequest(getMapsRequest)
+            )
             .map(mapProfile::toMapFromMapEntity)
             .collect(Collectors.toList());
     }

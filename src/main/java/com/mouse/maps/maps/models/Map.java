@@ -24,5 +24,8 @@ public class Map {
     public User user;
 
     @Nullable
+    public String image;
+
+    @Nullable
     Collection<Tag> tags;
 }

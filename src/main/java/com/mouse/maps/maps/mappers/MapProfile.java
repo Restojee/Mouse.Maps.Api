@@ -21,11 +21,17 @@ public interface MapProfile {
     @Mapping(source = "tags", target = "tags")
     Map toMapFromMapEntity(MapEntity mapEntity);
 
-    MapEntity toMapEntityFromCreateMapRequest(CreateMapRequest createMapRequest);
+    MapEntity toMapEntityFromCreateMapRequest(
+        CreateMapRequest createMapRequest
+    );
 
-    MapCompletedEntity toMapCompletedEntityFromCompleteRequest(CompleteMapRequest completeMapRequest);
+    MapCompletedEntity toMapCompletedEntityFromCompleteRequest(
+        CompleteMapRequest completeMapRequest
+    );
 
-    MapFavoriteEntity toMapFavoriteEntityFromFavoriteRequest(FavoriteMapsRequest favoriteMapRequest);
+    MapFavoriteEntity toMapFavoriteEntityFromFavoriteRequest(
+        FavoriteMapsRequest favoriteMapRequest
+    );
 
     MapEntity toMapEntityFromUpdateMapRequest(
         @MappingTarget MapEntity mapEntity,
