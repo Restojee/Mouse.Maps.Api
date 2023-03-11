@@ -32,7 +32,6 @@ public class MapEntity {
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
-
     @Column(name = "created_utc_date")
     private Date createdUtcDate;
 

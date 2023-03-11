@@ -3,16 +3,11 @@ package com.mouse.maps.comments;
 import com.mouse.maps.comments.models.Comment;
 import com.mouse.maps.comments.models.CreateCommentRequest;
 import com.mouse.maps.comments.queries.CreateComment;
-import com.mouse.maps.comments.queries.DeleteComment;
 import com.mouse.maps.comments.queries.GetCommentsByMap;
 import com.mouse.maps.comments.queries.GetCommentsByUser;
-import com.mouse.maps.maps.models.GetMapsRequest;
-import com.mouse.maps.maps.models.Map;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -35,18 +30,18 @@ public class CommentsController {
     @Autowired
     protected CreateComment createComment;
 
-    @GetMapping("/user/{userId}")
+    @GetMapping("/by-user/{userId}")
     @Operation(
-        description = "GetCommentsByUserId",
+        description = "Get comments by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Comment> getCommentsByUserId(@PathVariable Integer userId) {
         return this.getCommentsByUser.invoke(userId);
     }
 
-    @GetMapping("/map/{mapId}")
+    @GetMapping("/by-map/{mapId}")
     @Operation(
-        description = "GetCommentsByMapId",
+        description = "Get comments by map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Comment> getCommentsByMapId(@PathVariable Integer mapId) {
@@ -55,7 +50,7 @@ public class CommentsController {
 
     @PostMapping
     @Operation(
-        description = "CreateComment",
+        description = "Create comment by user",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Comment createComment(@RequestBody CreateCommentRequest request) {

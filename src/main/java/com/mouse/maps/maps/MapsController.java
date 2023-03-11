@@ -16,7 +16,6 @@ import java.util.Collection;
 
 @RequestMapping("/maps")
 @SecurityRequirement(name = "bearerAuth")
-@PreAuthorize("isAuthenticated()")
 @Tag(name = "Maps")
 @RestController
 public class MapsController {
@@ -48,12 +47,24 @@ public class MapsController {
     @Autowired
     private UploadMapImage uploadMapImage;
 
+    @Autowired
+    private GetMaps getMaps;
+
     @GetMapping
     @Operation(
-        description = "Get maps endpoint",
+        description = "Get maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getMaps(@ParameterObject GetMapsRequest request) {
+        return this.getMaps.invoke(request);
+    }
+
+    @GetMapping("by-user")
+    @Operation(
+        description = "Get maps by user endpoint",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public Collection<Map> getMapsByUser(@ParameterObject GetMapsByUserRequest request) {
         return this.getMapsByUser.invoke(request);
     }
 
@@ -66,25 +77,26 @@ public class MapsController {
         return this.getMap.invoke(mapId);
     }
 
-    @GetMapping("/favorites")
+    @GetMapping("/favorites/by-user")
     @Operation(
         description = "Get favorite maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
-    public Collection<Map> getFavoriteMapsByUser(@ParameterObject GetMapsRequest request) {
+    public Collection<Map> getFavoriteMapsByUser(@ParameterObject GetMapsByUserRequest request) {
         return this.getFavoriteMapsByUser.invoke(request);
     }
 
-    @GetMapping("/completed")
+    @GetMapping("/completed/by-user")
     @Operation(
         description = "Get completed maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
-    public Collection<Map> getCompletedMapsByUser(@ParameterObject GetMapsRequest request) {
+    public Collection<Map> getCompletedMapsByUser(@ParameterObject GetMapsByUserRequest request) {
         return this.getCompletedMapsByUser.invoke(request);
     }
 
     @PostMapping
+    @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Create map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -94,6 +106,7 @@ public class MapsController {
     }
 
     @PutMapping
+    @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Update map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -103,6 +116,7 @@ public class MapsController {
     }
 
     @DeleteMapping
+    @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Delete map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -113,6 +127,7 @@ public class MapsController {
     }
 
     @PutMapping("/set-tags")
+    @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Set map tags endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -122,6 +137,7 @@ public class MapsController {
     }
 
     @PutMapping(value = "/update-image/{mapId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Update map image",
         security = @SecurityRequirement(name = "bearerAuth")
