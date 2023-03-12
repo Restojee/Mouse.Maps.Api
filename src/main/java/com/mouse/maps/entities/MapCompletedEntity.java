@@ -1,7 +1,6 @@
 package com.mouse.maps.entities;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import jakarta.persistence.*;
 import java.util.Date;
@@ -10,6 +9,9 @@ import java.util.Date;
 @Setter
 @Getter
 @Table(name = "maps_completed")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class MapCompletedEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +27,8 @@ public class MapCompletedEntity {
     private UserEntity user;
 
 
-    @Column(name = "image_url")
-    private String imageUrl;
+    @Column(name = "image")
+    private String image;
 
     @Column(name = "created_utc_date")
     private Date createdUtcDate;
