@@ -55,6 +55,13 @@ public class MapsController {
 
     @Autowired
     private RemoveCompletedMap removeCompletedMap;
+
+    @Autowired
+    private CreateMapFavorite createMapFavorite;
+
+    @Autowired
+    private RemoveMapFavorite removeMapFavorite;
+
     @GetMapping("/collect")
     @Operation(
         description = "Get maps endpoint",
@@ -172,6 +179,28 @@ public class MapsController {
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public String removeCompletedMap(@PathVariable Integer mapId) {
+        this.removeCompletedMap.invoke(mapId);
+        return "Ok";
+    }
+
+    @PostMapping(value = "/{mapId}/favorites/create")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(
+        description = "Add map to favorites",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public String addFavoriteMap(@PathVariable Integer mapId) {
+        this.createMapFavorite.invoke(mapId);
+        return "Ok";
+    }
+
+    @DeleteMapping(value = "/{mapId}/favorites/remove")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(
+        description = "Remove map from favorites",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public String removeFavoriteMap(@PathVariable Integer mapId) {
         this.removeCompletedMap.invoke(mapId);
         return "Ok";
     }
