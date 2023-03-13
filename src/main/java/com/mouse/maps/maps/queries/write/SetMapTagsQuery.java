@@ -54,6 +54,8 @@ public class SetMapTagsQuery implements SetMapTags {
             mapEntity.getTags().addAll(tags);
         }
 
-        return this.mapProfile.toMapFromMapEntity(mapEntity);
+        return this.mapProfile.toMapFromMapEntity(
+            this.mapRepository.save(mapEntity)
+        );
     }
 }
