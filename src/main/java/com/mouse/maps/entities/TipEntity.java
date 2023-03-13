@@ -23,9 +23,6 @@ public class TipEntity {
     private String text;
 
     @ManyToOne
-    @JoinColumn(name = "map_id")
-    private MapEntity map;
-    @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity user;
 
