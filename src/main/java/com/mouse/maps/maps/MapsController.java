@@ -50,25 +50,30 @@ public class MapsController {
     @Autowired
     private GetMaps getMaps;
 
-    @GetMapping
+    @Autowired
+    private CreateCompletedMap createCompletedMap;
+
+    @Autowired
+    private RemoveCompletedMap removeCompletedMap;
+    @GetMapping("/collect")
     @Operation(
-        description = "Get maps by user endpoint",
+        description = "Get maps endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getMaps(@ParameterObject GetMapsRequest request) {
         return this.getMaps.invoke(request);
     }
 
-    @GetMapping("by-user")
+    @GetMapping("/collect/by-user")
     @Operation(
         description = "Get maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
     public Collection<Map> getMapsByUser(@ParameterObject GetMapsByUserRequest request) {
-        return this.getMapsByUser.invoke(request);
+        return this.getMapsByUser.invoke( request);
     }
 
-    @GetMapping("/{mapId}")
+    @GetMapping("/one/by-id/{mapId}")
     @Operation(
         description = "Get map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -77,7 +82,7 @@ public class MapsController {
         return this.getMap.invoke(mapId);
     }
 
-    @GetMapping("/favorites/by-user")
+    @GetMapping("/favorites/collect/by-user")
     @Operation(
         description = "Get favorite maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -86,7 +91,7 @@ public class MapsController {
         return this.getFavoriteMapsByUser.invoke(request);
     }
 
-    @GetMapping("/completed/by-user")
+    @GetMapping("/completed/collect/by-user")
     @Operation(
         description = "Get completed maps by user endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
@@ -95,27 +100,27 @@ public class MapsController {
         return this.getCompletedMapsByUser.invoke(request);
     }
 
-    @PostMapping
+    @PostMapping("/create")
     @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Create map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
-    public Map createMap(@ParameterObject CreateMapRequest request) {
+    public Map createMap(@RequestBody CreateMapRequest request) {
         return this.createMap.invoke(request);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Update map endpoint",
         security = @SecurityRequirement(name = "bearerAuth")
     )
-    public Map updateMap(@ParameterObject UpdateMapRequest request) {
+    public Map updateMap(@RequestBody UpdateMapRequest request) {
         return this.updateMap.invoke(request);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/remove")
     @PreAuthorize("isAuthenticated()")
     @Operation(
         description = "Delete map endpoint",
@@ -142,7 +147,32 @@ public class MapsController {
         description = "Update map image",
         security = @SecurityRequirement(name = "bearerAuth")
     )
-    public Map updateMapImage(@RequestParam("file") MultipartFile file, @PathVariable Integer mapId) {
+    public Map updateMapImage(
+            @RequestParam("file") MultipartFile file,
+            @PathVariable Integer mapId
+    ) {
         return this.uploadMapImage.invoke(file, mapId);
+    }
+
+    @PostMapping(value = "/{mapId}/completed/create", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("isAuthenticated()")
+    @Operation(
+        description = "Add map to completed",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public String addCompletedMap(@RequestParam("file") MultipartFile file, @PathVariable Integer mapId) {
+        this.createCompletedMap.invoke(mapId, file);
+        return "Ok";
+    }
+
+    @DeleteMapping(value = "/{mapId}/completed/remove")
+    @PreAuthorize("isAuthenticated()")
+    @Operation(
+        description = "Remove map from completed",
+        security = @SecurityRequirement(name = "bearerAuth")
+    )
+    public String removeCompletedMap(@PathVariable Integer mapId) {
+        this.removeCompletedMap.invoke(mapId);
+        return "Ok";
     }
 }
