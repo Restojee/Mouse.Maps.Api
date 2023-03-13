@@ -1,0 +1,19 @@
+services:
+  app:
+    image: openjdk:11
+    container_name: mouse-maps-api
+    volumes:
+      - ./target/mouse-maps-app.jar:/usr/src/mouse-maps/mouse-maps-app.jar
+    ports:
+      - "9000:9000"
+  nginx:
+    image: nginx:latest
+    container_name: nginx_server
+    volumes:
+      - .nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./logs:/var/log/nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    depends_on:
+      - app
