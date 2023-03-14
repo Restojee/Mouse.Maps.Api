@@ -1,16 +1,21 @@
+version: '2'
 services:
   app:
-    image: openjdk:11
+    image: maven:3.8.3-openjdk-17
     container_name: mouse-maps-api
     volumes:
-      - ./target/mouse-maps-app.jar:/usr/src/mouse-maps/mouse-maps-app.jar
+      - ./target:/usr/src/mouse-maps/target
+      - .:/usr/src/mouse-maps
     ports:
-      - "9000:9000"
+      - "8000:8000"
+    build:
+      context: .
+      dockerfile: Dockerfile
   nginx:
     image: nginx:latest
-    container_name: nginx_server
+    container_name: nginx
     volumes:
-      - .nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./logs:/var/log/nginx
     ports:
       - "80:80"

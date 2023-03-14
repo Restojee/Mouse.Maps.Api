@@ -1,11 +1,13 @@
-FROM openjdk:19-jdk-alpine
+FROM maven:3.8.3-openjdk-17 as build
+ENV HOME=/usr/app
+RUN mkdir -p $HOME
+WORKDIR $HOME
+ADD . $HOME
+RUN mvn clean package
 
-ARG JAR_FILE=target/*.jar
-
-COPY ${JAR_FILE} mouse-maps-app.jar
+FROM maven:3.8.3-openjdk-17
+COPY --from=build /usr/app/target/mouse-maps-app.jar mouse-maps-app.jar
 
 COPY nginx/nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 9000
-
-ENTRYPOINT ["java","-jar","/app.jar"]
+ENTRYPOINT java -jar mouse-maps-app.jar

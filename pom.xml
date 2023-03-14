@@ -6,7 +6,7 @@
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.0.1</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<relativePath/> <!-- lookup parent from ifksp.repository -->
 	</parent>
 	<groupId>com.mouse</groupId>
 	<artifactId>mouse-maps-api</artifactId>
@@ -61,7 +61,7 @@
 		</dependency>
 
 		<dependency>
-			<groupId>org.hibernate</groupId>
+			<groupId>org.hibernate.orm</groupId>
 			<artifactId>hibernate-jpamodelgen</artifactId>
 			<version>6.1.6.Final</version>
 		</dependency>
@@ -99,10 +99,14 @@
 	</dependencies>
 
 	<build>
+		<finalName>mouse-maps-app</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.mouse.maps.MouseApplication</mainClass>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.bsc.maven</groupId>
@@ -134,10 +138,10 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>3.11.0</version>
 				<configuration>
-					<source>8</source>
-					<target>8</target>
+					<source>17</source>
+					<target>17</target>
 					<annotationProcessorPaths>
 						<path>
 							<groupId>org.mapstruct</groupId>
@@ -159,5 +163,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
